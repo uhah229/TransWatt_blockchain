@@ -1,6 +1,6 @@
 pragma solidity ^0.5.8;
 
-contract DappToken {
+contract TranswattToken {
   string public name = "TransWatt Token";
   string public symbol = "TWTT";
   string public standard = "TransWatt Token v1.0";
@@ -30,5 +30,7 @@ contract DappToken {
     return true;
 
   }
+
+  // delegated transfer 
 
 }

@@ -1,10 +1,10 @@
-var DappToken = artifacts.require("./DappToken.sol");
+var TranswattToken = artifacts.require("./TranswattToken.sol");
 
-contract('DappToken', function(accounts) {
+contract('TranswattToken', function(accounts) {
   var tokenInstance;
 
   it('initializes the contract with the correct values', function(){
-    return DappToken.deployed().then(function(instance) {
+    return TranswattToken.deployed().then(function(instance) {
       tokenInstance = instance;
       return tokenInstance.name();
     }).then(function(name) {
@@ -19,7 +19,7 @@ contract('DappToken', function(accounts) {
   })
 
   it('allocates initial supply upon deployment', function() {
-    return DappToken.deployed().then(function(instance) {
+    return TranswattToken.deployed().then(function(instance) {
       tokenInstance = instance;
       return tokenInstance.totalSupply();
     }).then(function(totalSupply) {
@@ -31,7 +31,7 @@ contract('DappToken', function(accounts) {
   });
 
   it('transfers token ownership', function() {
-    return DappToken.deployed().then(function(instance) {
+    return TranswattToken.deployed().then(function(instance) {
       tokenInstance = instance;
       // test require by transfering an absurdly large amount
       return tokenInstance.transfer.call(accounts[1], 999999999999);
