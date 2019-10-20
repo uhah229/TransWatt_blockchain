@@ -1,5 +1,5 @@
-var TranswattToken = artifacts.require("./TranswattToken.sol");
+var TransWattToken = artifacts.require("./TransWattToken.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(TranswattToken, 1000000);
+  deployer.deploy(TransWattToken, 1000000);
 };
