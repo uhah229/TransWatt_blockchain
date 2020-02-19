@@ -33,7 +33,7 @@ contract('TransWattTokenSale', function(accounts) {
     }).then(function(instance) {
       // then grab token sale instance
       tokenSaleInstance = instance;
-      // provision 75% of all tokens to the token sale
+      // provision 75% of all tokens to the token sale.
       return tokenInstance.transfer(tokenSaleInstance.address, tokensAvailable, { from: admin }) 
     }).then(function(receipt) {
       numberOfTokens = 10;
@@ -59,6 +59,27 @@ contract('TransWattTokenSale', function(accounts) {
       return tokenSaleInstance.buyTokens(800000, { from: buyer, value: numberOfTokens * tokenPrice });
     }).then(assert.fail).catch(function(error) {
       assert(error.message.indexOf('revert') >= 0, 'Cannot purchase more tokens than available');
+    });
+  });
+
+  it('ends token sale', function() {
+    return TransWattToken.deployed().then(function(instance) {
+      // Grabs token instance first
+      tokenInstance = instance;
+      return TransWattTokenSale.deployed();
+    }).then(function(instance) {
+      // then grab token sale instance
+      tokenSaleInstance = instance;
+      // try to end the sale from other account other than admin
+      return tokenSaleInstance.endSale({ from: buyer });
+    }).then(assert.fail).catch(function(error) {
+      assert(error.message.indexOf('revert' >= 0, 'must be admin to end sale'));
+      // end sale as admin
+      return tokenSaleInstance.endSale({ from: admin});
+    }).then(function(receipt) {
+      return tokenInstance.balanceOf(admin);
+    }).then(function(balance) {
+      assert.equal(balance.toNumber(), 999990, 'returns all unsold dapp tokens to admin');
     });
   });
 })
